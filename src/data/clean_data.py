@@ -55,6 +55,12 @@ if __name__ == "__main__":
         columns=['InternetService', 'Contract', 'PaymentMethod'],
         drop_first=True
     )
+
+    df.columns = df.columns.str.replace(' ', '_')
+    df.columns = df.columns.str.replace('(', '')
+    df.columns = df.columns.str.replace(')', '')
+    print("Column names:", list(df.columns))
+
     print("One-hot encoding done")
     print("Shape after encoding:", df.shape)
 
