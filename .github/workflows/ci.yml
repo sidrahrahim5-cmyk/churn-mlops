@@ -2,31 +2,32 @@ name: Churn MLOps CI Pipeline
 
 on:
   push:
-    branches:[main]
+    branches: [ main ]
   pull_request:
-    branches:[main]
+    branches: [ main ]
 
 jobs:
-  tests:
-    runs-on:ubuntu-latest
-
+  test:
+    runs-on: ubuntu-latest
     steps:
-    -name: Code Checkout
-     uses: actions/checkout@v3
+      - name: Code Checkout
+        uses: actions/checkout@v3
 
-    -name: Python 3.11 Setup
-     uses: actions/setup-python@v4
-     with:
-      python-version: '3.11'
+      - name: Python Setup
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
 
-    -name: Libraries INstall
-     run: |
-      python -m pip install --upgrade pip
-      pip instal -r requirements.txt
+      - name: Install Libraries
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-    -name: Data Download
-     run: |
-      python src/data/clean_data.python
+      - name: Download Data
+        run: python src/data/download_data.py
 
-    -name: Model Training
-     run:
+      - name: Clean Data
+        run: python src/data/clean_data.py
+
+      - name: Train Model
+        run: python src/models/train.py
